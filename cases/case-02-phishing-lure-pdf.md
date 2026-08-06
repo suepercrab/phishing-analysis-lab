@@ -29,6 +29,14 @@ All dangerous object types zero (`/JS`, `/JavaScript`, `/OpenAction`, `/AA`, `/L
 *conceal other objects from a surface scan* — `pdfid` cannot see inside it. A zero-count
 result is therefore not sufficient to clear this file.
  
+![pdfid.py — /ObjStm = 1, all active-content keywords zero](../screenshots/5a2-pdfid-results.png)
+
+*`pdfid.py` — `/ObjStm` = 1, all active-content keywords zero*
+
+![Full pdfid keyword list — /Launch, /EmbeddedFile, /XFA, /RichMedia all zero](../screenshots/suspicious-55.png)
+
+*Full pdfid keyword list — `/Launch`, `/EmbeddedFile`, `/XFA`, `/RichMedia` all zero*
+
 **2. Object-stream decompression — `pdf-parser.py -f`**
  
 Because of the object stream, the file was decompressed and researched rather than
@@ -40,12 +48,20 @@ cleared on the surface scan alone:
 - `pdf-parser.py -f | grep -i http` → empty
 Nothing hidden in the object stream. The file itself is genuinely inert.
  
+![All four searches empty — including the decompressed (-f) object stream](../screenshots/5a2-no-urls-hidden-objects.png)
+
+*All four searches empty — including the decompressed (`-f`) object stream*
+
 **3. Threat intelligence — the actual finding**
  
 MalwareBazaar tags this sample **`pdf` and `alfredcore-com`** — a domain-based campaign
 tag. Reporter: **JAMESWT_WT**, an established malware researcher (raising confidence that
 the association is deliberate and accurate, not bulk-upload noise).
  
+![MalwareBazaar: alfredcore-com campaign tag, reporter JAMESWT_WT](../screenshots/5a2-bazaar-results.png)
+
+*MalwareBazaar: `alfredcore-com` campaign tag, reporter JAMESWT_WT*
+
 **4. Domain reputation — VirusTotal URL report for `http://alfredcore.com/`**
  
 | Finding | Detail |
@@ -62,6 +78,10 @@ carries more weight than the raw ratio suggests. The 127.0.0.1 resolution and ur
 failure independently confirm the domain is no longer live — consistent with a campaign
 that has run its course.
  
+![VirusTotal URL report — Fortinet: Phishing, alphaMountain: Malicious; resolves to 127.0.0.1](../screenshots/5a2-virustotal-result.png)
+
+*VirusTotal URL report — Fortinet: Phishing, alphaMountain: Malicious; resolves to 127.0.0.1*
+
 ## Impact
  
 The file alone carries no executable payload. Its role is trust building: a legitimate
@@ -106,3 +126,4 @@ Two judgment points worth stating explicitly:
 | `5a2-bazaar-results.png` | MalwareBazaar: `alfredcore-com` tag, reporter JAMESWT_WT |
 | `5a2-virustotal-result.png` | Domain 2/92 — Fortinet Phishing, alphaMountain Malicious, 127.0.0.1 |
  
+
