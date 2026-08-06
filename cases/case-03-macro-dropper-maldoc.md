@@ -40,6 +40,10 @@ Sub AutoOpen()
 `Sub AutoOpen()` executes the moment the document is opened — no user interaction beyond
 opening the file.
  
+![Macro source — Sub AutoOpen(), object declarations, and the strUrl payload URL](../screenshots/79e-olevba-1.png)
+
+*Macro source — `Sub AutoOpen()`, object declarations, and the `strUrl` payload URL*
+
 **2. `olevba` analysis table**
  
 | Type | Keyword | Meaning |
@@ -62,6 +66,10 @@ opening the file.
 | **IOC** | `downloaded_script.ps1` | Executable file name |
 | **IOC** | `powershell.exe` | Executable file name |
  
+![olevba analysis table — AutoExec trigger, Suspicious execution keywords, extracted IOCs](../screenshots/79e-olevba-2.png)
+
+*`olevba` analysis table — AutoExec trigger, Suspicious execution keywords, extracted IOCs*
+
 **3. Reconstructed attack chain**
  
 1. Victim opens the document → `AutoOpen` fires automatically
@@ -121,3 +129,4 @@ delivery mechanism.
 | `79e-olevba-1.png` | Macro source — `Sub AutoOpen()`, object declarations, `strUrl` payload URL |
 | `79e-olevba-2.png` | `olevba` analysis table — AutoExec, Suspicious keywords, extracted IOCs |
  
+
