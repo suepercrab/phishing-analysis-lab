@@ -7,7 +7,7 @@ investigation reads in order.
 |---|---|---|
 | 19d-pdfid-results.png | 01 | pdfid keyword counts |
 | suspicious-19d.png | 01 | Object dump — FlateDecode streams + image XObject |
-| 19d-URI-results.png | 01 | Empty URI / http searches |
+| 19d-no-urls-results.png | 01 | Empty URI / http searches |
 | 19d-bazaar-results.png | 01 | MalwareBazaar — `pdf` tag only, no family, Anonymous |
 | 5a2-pdfid-results.png | 02 | pdfid — /ObjStm = 1, active content zero |
 | suspicious-55.png | 02 | Full pdfid keyword list |
