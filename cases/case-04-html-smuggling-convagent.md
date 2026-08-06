@@ -1,6 +1,4 @@
-
-
-Case 04 html smuggling convagent · MD
+ Case 04 html smuggling convagent · MD
 # Case 04 — HTML Smuggling Delivering a Convagent Trojan-Dropper DLL
  
 **Verdict:** Malicious — High confidence
@@ -25,9 +23,10 @@ three distinct evasion mechanisms.
  
 ### 1. Smuggling mechanism (raw file)
  
-The HTML opens with a decoy `<title>Loading...</title>` followed immediately by:
+The HTML opens with a decoy loading-page title, followed immediately by the smuggling script:
  
-```javascript
+```html
+<title>Loading...</title>
 <script>document.open();document.write(atob("PCFET0NUWVBFIGh0bWw+..."))</script>
 ```
  
@@ -36,8 +35,12 @@ base64 blob and writes it into the page **at render time**. Nothing malicious ex
 file in transit — this is the defining characteristic of HTML smuggling and the reason it
 bypasses attachment scanning.
  
-The blob begins `PCFET0NUWVBF`, which decodes to `<!DOCTYPE` — confirming the smuggled
-content is a further HTML document.
+The blob begins `PCFET0NUWVBF`, which base64-decodes to an HTML `DOCTYPE` declaration —
+confirming the smuggled content is a further HTML document.
+ 
+![Raw HTML — document.write(atob( with the embedded base64 blob](../screenshots/55a-html.png)
+ 
+*Raw HTML — `document.write(atob(` with the embedded base64 blob*
  
 ### 2. Layer 1 decode → dropper script
  
@@ -58,6 +61,10 @@ Behaviour: assemble the embedded payload (`__pd`) into a Blob → create a downl
 name it **`WindowsUpdate.log`** (innocuous disguise) → **programmatically click it** to
 force the download → clean up the DOM to reduce forensic traces.
  
+![Dropper JavaScript — Blob → WindowsUpdate.log → programmatic a.click(), with OS and click gates](../screenshots/55a-dropper.png)
+ 
+*Dropper JavaScript — Blob → `WindowsUpdate.log` → programmatic `a.click()`, with OS and click gates*
+ 
 ### 3. Three evasion mechanisms
  
 | Mechanism | Code | Purpose |
@@ -65,6 +72,10 @@ force the download → clean up the DOM to reduce forensic traces.
 | **Time-based self-destruct** | `if(Date.now()>1786579199000){document.body.innerHTML="";}` | Blanks the page after the campaign window, defeating later analysis |
 | **OS gating** | `currentOS==="Windows"` check | Only fires on Windows; wastes nothing on non target hosts |
 | **Click gating** | `document.addEventListener("click", ...)` | Requires user interaction — defeats automated sandboxes that don't click |
+ 
+![Decoded layer — the Date.now() self-destruct check and the embedded payload blob](../screenshots/55a-script.png)
+ 
+*Decoded layer — the `Date.now()` self-destruct check and the embedded payload blob*
  
 ### 4. Payload extraction and identification
  
@@ -77,6 +88,14 @@ force the download → clean up the DOM to reduce forensic traces.
  
 The disguised `WindowsUpdate.log` is in fact a Windows DLL. Debug symbols are stripped —
 a common anti-analysis measure.
+ 
+![Error step — truncated 12-byte extraction: file: data, coincidental MZ header](../screenshots/55a-exe.png)
+ 
+*Error step — truncated 12-byte extraction: `file: data`, coincidental `MZ` header*
+ 
+![Correct extraction — 3,880,960 bytes, PE32 executable (DLL), real SHA-256](../screenshots/55a-payload-hash.png)
+ 
+*Correct extraction — 3,880,960 bytes, PE32 executable (DLL), real SHA-256*
  
 ### 5. Payload reputation — VirusTotal (22/70)
  
@@ -106,6 +125,10 @@ logic, consistent with the evasion built into the delivery HTML. The `spreader` 
 indicates self-propagation capability. The heavy proportion of ML/heuristic detections
 (`!ml`, `Static AI`, `HighConfidence`) rather than exact signatures suggests a relatively
 recent variant.
+ 
+![VirusTotal 22/70 — Convagent family; trojan / ransomware / downloader; spreader, detect-debug-environment](../screenshots/55a-virustotal.png)
+ 
+*VirusTotal 22/70 — Convagent family; trojan / ransomware / downloader; `spreader`, `detect-debug-environment`*
  
 ## Impact
  
@@ -167,8 +190,9 @@ result. A byte match on a truncated file is not proof of anything.
 |---|---|
 | `55a-html.png` | Raw HTML — `document.write(atob(` and the base64 blob |
 | `55a-script.png` | Decoded layer — `Date.now()` self-destruct and embedded payload blob |
-| `55a-dropper.png` / `55a-login.png` | Dropper JavaScript — Blob → `WindowsUpdate.log` → `a.click()`, OS and click gates |
+| `55a-dropper.png` | Dropper JavaScript — Blob → `WindowsUpdate.log` → `a.click()`, OS and click gates |
 | `55a-exe.png` | **Error step** — truncated 12-byte extraction, `file: data`, coincidental `MZ` |
 | `55a-payload-hash.png` | **Correct extraction** — 3,880,960 bytes, PE32 DLL, real SHA-256 |
 | `55a-virustotal.png` | VirusTotal 22/70 — Convagent, trojan/ransomware/downloader, spreader, detect-debug-environment |
+ 
  
