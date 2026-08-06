@@ -89,6 +89,6 @@ visible in the file.
 | `first_pdfid.png` | `pdfid.py` output — all active-content keywords zero |
 | `19d-pdfid-results.png` | pdfid keyword counts |
 | `suspicious-19d.png` | Object dump — FlateDecode streams + image XObject |
-| `19d-URI-results.png` | Empty URI / http searches |
+| `19d-no-url-results.png` | Empty URI / http searches |
 | `19d-bazaar-results.png` | MalwareBazaar entry: `pdf` tag only, no family, Anonymous |
  
