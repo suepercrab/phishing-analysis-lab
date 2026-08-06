@@ -36,6 +36,10 @@ All dangerous PDF object types returned a count of zero:
  
 Structural objects only: 23 `obj`, 9 `stream`, 1 `/Page`.
  
+![pdfid.py output — every active-content keyword returns zero](../screenshots/19d-pdfid-results.png)
+
+*`pdfid.py` output — every active-content keyword returns zero*
+
 **2. Link analysis — `pdf-parser.py`**
  
 - `pdf-parser.py --search URI` → no results (no link objects)
@@ -44,16 +48,28 @@ Both empty. This matters because modern malicious PDFs are frequently *link-base
 rather than code exploits — a clean `pdfid` alone is not sufficient to clear a PDF, so URL
 presence was specifically tested for.
  
+![No link objects and no URLs in page text — both searches return nothing](../screenshots/19d-no-urls-results.png)
+
+*No link objects and no URLs in page text — both searches return nothing*
+
 **3. Content composition**
  
 Object dump showed only `/FlateDecode` compressed streams (standard page content) and an
 `/XObject` (an embedded image). Normal document structure throughout.
  
+![Object dump — only FlateDecode compressed streams and an image XObject](../screenshots/suspicious-19d.png)
+
+*Object dump — only FlateDecode compressed streams and an image XObject*
+
 **4. Threat intelligence context**
  
 MalwareBazaar carries this sample with the generic tag `pdf` only — **no malware family, no
 signature**, reporter listed as *Anonymous*.
  
+![MalwareBazaar: generic pdf tag only, no malware family, reporter Anonymous](../screenshots/19d-bazaar-results.png)
+
+*MalwareBazaar: generic `pdf` tag only, no malware family, reporter Anonymous*
+
 ## Impact
  
 None identified. The file carries no executable code, no auto-execution triggers, no
@@ -86,9 +102,9 @@ visible in the file.
  
 | File | Shows |
 |---|---|
-| `first_pdfid.png` | `pdfid.py` output — all active-content keywords zero |
 | `19d-pdfid-results.png` | pdfid keyword counts |
 | `suspicious-19d.png` | Object dump — FlateDecode streams + image XObject |
-| `19d-no-url-results.png` | Empty URI / http searches |
+| `19d-no-urls-results.png` | Empty URI / http searches |
 | `19d-bazaar-results.png` | MalwareBazaar entry: `pdf` tag only, no family, Anonymous |
  
+
