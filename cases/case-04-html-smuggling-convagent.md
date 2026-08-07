@@ -69,9 +69,19 @@ force the download → clean up the DOM to reduce forensic traces.
 | Mechanism | Code | Purpose |
 |---|---|---|
 | **Time-based self-destruct** | `if(Date.now()>1786579199000){document.body.innerHTML="";}` | Blanks the page after the campaign window, defeating later analysis |
-| **OS gating** | `currentOS==="Windows"` check | Only fires on Windows; wastes nothing on non target hosts |
-| **Click gating** | `document.addEventListener("click", ...)` | Requires user interaction — defeats automated sandboxes that don't click |
- 
+| **OS gating** | `typeof currentOS==="undefined" \|\| currentOS==="Windows"` | Fails open — fires on Windows or when OS detection never ran |
+| **Click gating** | `document.addEventListener("click", ...)` | Requires user interaction, defeating automated sandboxes that don't click |
+
+The OS gate deserves a closer look. The condition is an OR, not a strict
+Windows check as I originally thought, the payload drops when `currentOS` is `"Windows"` **or**
+when `currentOS` is undefined. If the OS-detection code never ran, was
+blocked, or errored, the undefined branch is true and the payload drops
+anyway.
+
+That is a fail-open design, and it shows a point regarding the author's
+intentions: they would rather deliver to a non-target host than miss a
+Windows victim. 
+
 ![Decoded layer — the Date.now() self-destruct check and the embedded payload blob](../screenshots/55a-script.png)
  
 *Decoded layer — the `Date.now()` self-destruct check and the embedded payload blob*
