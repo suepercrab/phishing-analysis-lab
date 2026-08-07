@@ -1,6 +1,3 @@
-
-
-Case 03 macro dropper maldoc · MD
 # Case 03 — Macro Dropper Maldoc (PowerShell Stealer)
  
 **Verdict:** Malicious — High confidence

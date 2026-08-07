@@ -1,6 +1,3 @@
-
-
-Readme · MD
 # Phishing & Malware Analysis Lab
  
 Static analysis of four real phishing and malware samples, using the workflow of identify, analyze, correlate with threat intelligence, extract

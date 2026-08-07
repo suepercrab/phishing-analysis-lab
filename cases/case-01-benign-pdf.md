@@ -1,6 +1,3 @@
-
-
-Case 01 benign pdf · MD
 # Case 01 — Benign PDF (Correct Clearance)
  
 **Verdict:** Benign — Medium-High confidence

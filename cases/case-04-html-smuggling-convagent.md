@@ -1,4 +1,3 @@
- Case 04 html smuggling convagent · MD
 # Case 04 — HTML Smuggling Delivering a Convagent Trojan-Dropper DLL
  
 **Verdict:** Malicious — High confidence

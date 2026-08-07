@@ -1,6 +1,3 @@
-
-
-Methodology · MD
 # Methodology
  
 How these samples were handled and analyzed. Every sample in this lab is **real, working
@@ -101,6 +98,25 @@ visiting a suspicious URL directly.
  
 ---
  
+## 5. Verdict and confidence model
+Every case closes with a verdict and a confidence level. The verdict answers
+"what is this file"; the confidence answers "how much weight should a
+downstream decision put on that answer."
+| Confidence | Basis |
+|---|---|
+| High | Malicious capability observed directly in extracted content --
+| | macro source, decoded script, or extracted payload |
+| Medium | Strong structural or contextual indicators, but the payload
+| | itself was not recovered or was unavailable |
+| Low | Indicators are suggestive only; verdict depends on context the
+| | analyst does not have |
+Confidence is stated separately from the verdict because a Tier 1 escalation
+should carry both. "Malicious, high confidence" and "malicious, low
+confidence" warrant different responses, and collapsing them into a single
+label pushes that judgement onto whoever reads the ticket next.
+
+---
+
 ## 6. Verification principles applied
  
 - **Plausibility-check every artifact.** A 12-byte file cannot be a working executable,

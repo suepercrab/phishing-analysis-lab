@@ -1,6 +1,3 @@
-
-
-Case 02 phishing lure pdf · MD
 # Case 02 — Phishing Lure PDF (Malicious in Campaign Context)
  
 **Verdict:** Malicious in campaign context — Medium-High confidence
