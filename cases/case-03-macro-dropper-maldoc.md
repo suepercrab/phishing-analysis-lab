@@ -34,8 +34,14 @@ Sub AutoOpen()
     ...
 ```
  
-`Sub AutoOpen()` executes the moment the document is opened — no user interaction beyond
-opening the file.
+`Sub AutoOpen()` is an auto execution trigger: it runs as soon as the
+document is opened, with no further user action such as clicking a button
+or enabling a specific feature. It is still gated on macro execution being
+permitted -- on a default Office configuration the user must click through
+the trust banner ("Enable Content"), and files carrying Mark-of-the-Web are
+blocked from running macros at all. The social engineering effort in this
+campaign is therefore aimed entirely at getting the victim past that single
+prompt.
  
 ![Macro source — Sub AutoOpen(), object declarations, and the strUrl payload URL](../screenshots/79e-olevba-1.png)
 
